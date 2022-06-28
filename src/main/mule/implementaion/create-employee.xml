@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="45cc7e7f-4fdb-41e8-b5ec-9edde8df6118" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="root" database="sys" />
+	</db:config>
+	<flow name="create-employeeFlow" doc:id="21470402-5fa9-4a50-99ff-5d9366c37f30" >
+		<logger level="INFO" doc:name="Start Log" doc:id="9ffadf35-c059-44a6-ba8b-13fd3526809e" message="Create employee flow started"/>
+		<db:insert doc:name="Insert" doc:id="25d90b9e-8f86-410a-babf-65664249f83b" config-ref="Database_Config">
+			<db:sql ><![CDATA[insert into employ (emp_id, emp_name, emp_status, emp_address) values(:empID, :empName, :empStatus, :empAddress)]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	empID: payload.employeeID,
+	empName: payload.employeeName,
+	empStatus: payload.employeeStatus,
+	empAddress:payload.employeeAddress
+}]]]></db:input-parameters>
+		</db:insert>
+		<ee:transform doc:name="Transform Message" doc:id="b592bae8-3b81-4dc3-9144-1b40e9a068bc" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  Code: 201,
+  message: "created",
+  description: "employee added in Hr system",
+  datetime: "2022-05-30T05:33:00Z",
+  transactionId: "4c48e380-0895-456c-8a16-d733c0d9d0a4"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="End Log" doc:id="d283e669-9228-4634-86d0-1443d0453a31" message="Create employee flow completed "/>
+	</flow>
+</mule>

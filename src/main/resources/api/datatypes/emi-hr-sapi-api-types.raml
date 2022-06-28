@@ -1,0 +1,104 @@
+#%RAML 1.0 Library
+usage: emp hr sapi datatypes
+types:
+  CreateEmployeeRequestType:
+    description: create employee request payload types
+    type: object
+    properties:
+      empId:
+        description: empoyee id
+        type: integer
+        required: true
+        example: 56543
+      empName:
+        description: empoyee name
+        type: string
+        required: true
+        example: "Mouli"
+      empAddress:
+        description: empoyee address
+        type: string
+        required: false
+        example: "Canada"
+      empStatus:
+        description: empoyee status
+        type: string
+        example: "A"
+  CreateEmployeeResponseType:
+    description: create employee reponse types
+    type: object
+    properties:
+      Code:
+        description: HTTP response status code
+        type: integer
+        required: true
+        example: 201
+      message:
+        description: HTTP response message
+        type: string
+        example: "Created"
+      description:
+        description: description of response
+        type: string
+        example: "Employee created in HR system"
+      datetime:
+        description: date time of event happend
+        type: string
+        example: "2022-05-30T05:33:00Z"
+      transactionId:
+        description: transaction Id over response
+        type: string
+        example: "4c48e380-0895-456c-8a16-d733c0d9d0a4"
+  BadRequestResponseType:
+    description: create employee reponse types
+    type: object
+    properties:
+      Code:
+        description: HTTP response status code
+        type: integer
+        required: true
+        example: 400
+      message:
+        description: HTTP response message
+        type: string
+        example: "Bad request"
+      description:
+        description: description of response
+        type: string
+        example: "Invalid payload"
+      datetime:
+        description: date time of event happend
+        type: string
+        example: "2022-05-30T05:33:00Z"
+      transactionId:
+        description: transaction Id over response
+        type: string
+        example: "4c48e380-0895-456c-8a16-d733c0d9d0a4"
+  InternalSeverErrorResponseType:
+    description: create employee reponse types
+    type: object
+    properties:
+      Code:
+        description: HTTP response status code
+        type: integer
+        required: true
+        example: 500
+      message:
+        description: HTTP response message
+        type: string
+        example: "Internal sever error"
+      description:
+        description: description of response
+        type: string
+        example: "The sever encountered unexpected error please reach out the team"
+      datetime:
+        description: date time of event happend
+        type: string
+        example: "2022-05-30T05:33:00Z"
+      transactionId:
+        description: transaction Id over response
+        type: string
+        example: "4c48e380-0895-456c-8a16-d733c0d9d0a4"
+  
+          
+      
